@@ -1,0 +1,28 @@
+ncli ms register ip-address=vcenter_ip admin-username=username admin-password=password port=port_number
+
+ncli host ls
+ncli host edit id=00061f92-bac4-a8e7-3194-a83ca540eb08 enable-maintenance-mode=false
+ncli host edit id=<host_id> enable-maintenance-mode=true
+
+sudo shutdown -P now / cvm_shutdown -P now
+
+
+ncli host ls | grep Under 
+ncli host ls | egrep "Maint| Id| Name"|grep true -B2
+ncli host edit id=<CVM_ID> enable-maintenance-mode=true
+
+ncli host edit id=11 enable-maintenance-mode=false
+
+ncli cluster edit-info cluster-fqdn=<name.domain.local>
+
+ecli task.list include_completed=false
+
+ergon_update_task --task_uuid=948b373a-98ad-4ca8-897a-c23179d50b58 --task_status=succeeded
+
+
+cluster --cluster_name="ADC-W-PRD-VDI-##-NX" --cluster_external_ip=10.x.x.x --dns_servers=10.16.77.9,10.48.77.109 --ntp_servers=10.120.223.85,10.48.135.66 --svm_ips=10.x.x.x,10.x.x.x --redundancy_factor=3 create
+
+ncli ctr create name=TEST2 sp-name=default-storage-pool-62633643413913 rf=2
+ncli datastore { create  | add} ctr-name="ctr_name" [name="name" ] [host-ids="host_ids" ] [read-only="read_only" ]  
+ncli datastore create ctr-name="ctr_name" name="datastore_name" host-ids=(optional if not entered all host will atached)
+

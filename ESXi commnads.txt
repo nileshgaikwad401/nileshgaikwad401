@@ -1,0 +1,29 @@
+esxcli network ip dns server list
+esxcli network ip  dns server add -s 10.116.24.140
+esxcli network ip  dns server add -s 10.116.52.61
+
+esxcli network ip  dns server remove -s 8.8.8.8
+
+vim-cmd vmsvc/power.on <vmid>
+esxcli network ip dns search list
+esxcli network ip dns search add -d healthspring.inside
+esxcli network ip dns search remove -d intra.rtfmp.com
+
+esxcli system hostname set --fqdn=IADDESX0001.healthspring.inside
+
+
+DISABLE IPV6 ESXI
+esxcli network ip set --ipv6-enabled=false
+esxcli system module parameters set -m tcpip4 -p ipv6=0
+
+
+
+esxcli network ip  dns server add -s 10.25.160.228
+esxcli network ip  dns server add -s 10.116.52.61
+esxcli network ip dns search add -d healthspring.inside
+
+esxcli system settings encryption recovery list
+
+
+esxcli system coredump network set --interface-name vmk0 --server-ipv4 10.116.4.92 --server-port 6500
+esxcli system coredump network set --enable=true
