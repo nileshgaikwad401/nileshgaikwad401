@@ -1,9 +1,17 @@
+cluster status | grep -v UP 
+curl localhost:2019/prism/leader && echo 
 ncli ms register ip-address=vcenter_ip admin-username=username admin-password=password port=port_number
 
 ncli host ls
 ncli host edit id=00061f92-bac4-a8e7-3194-a83ca540eb08 enable-maintenance-mode=false
 ncli host edit id=<host_id> enable-maintenance-mode=true
 
+CHANGE ALL ESXI PASSWORD FROM CVM: 
+echo -e "CHANGING ALL ESXi HOST PASSWORDS. Note - This script cannot be used for passwords that contain special characters ( $ \ { }  ^ &)\nPlease input new password: "; read -s password1; echo "Confirm new password: "; read -s password2; if [ "$password1" == "$password2" ] && [[ ! "$password1" =~ [\\\{\$\^\}\&] ]]; then hostssh "echo -e \"${password1}\" | passwd root --stdin"; else echo "The passwords do not match or contain invalid characters (\ $ { } ^ &)"; fi
+
+
+
+SHUTDOWN CVM GRACEFULLY:
 sudo shutdown -P now / cvm_shutdown -P now
 
 
@@ -17,7 +25,7 @@ ncli cluster edit-info cluster-fqdn=<name.domain.local>
 
 ecli task.list include_completed=false
 
-ergon_update_task --task_uuid=948b373a-98ad-4ca8-897a-c23179d50b58 --task_status=succeeded
+ergon_update_task --task_uuid=68f9a8f6-1945-4aa1-80df-ac12d397e6b3 --task_status=aborted
 
 
 cluster --cluster_name="ADC-W-PRD-VDI-##-NX" --cluster_external_ip=10.x.x.x --dns_servers=10.16.77.9,10.48.77.109 --ntp_servers=10.120.223.85,10.48.135.66 --svm_ips=10.x.x.x,10.x.x.x --redundancy_factor=3 create
@@ -25,4 +33,23 @@ cluster --cluster_name="ADC-W-PRD-VDI-##-NX" --cluster_external_ip=10.x.x.x --dn
 ncli ctr create name=TEST2 sp-name=default-storage-pool-62633643413913 rf=2
 ncli datastore { create  | add} ctr-name="ctr_name" [name="name" ] [host-ids="host_ids" ] [read-only="read_only" ]  
 ncli datastore create ctr-name="ctr_name" name="datastore_name" host-ids=(optional if not entered all host will atached)
+
+
+sudo chronyc -n sources -v
+hostssh 'esxcli system settings advanced list -o "/Misc/APDHandlingEnable"'
+hostssh 'esxcli system settings advanced set -o "/Misc/APDHandlingEnable" --int-value "0"
+
+hostssh esxcli system settings advanced list -o "/NFS/HeartbeatTimeout"
+hostssh esxcli system settings advanced set -o "/NFS/HeartbeatTimeout" --int-value "30"
+
+
+sudo snmpwalk -v 3 -l authPriv -u servicenow -x AES -X @aVO7HfgftrbuW0u1 -a sha -A @aVO7HfgftrbuW0u1 127.0.0.1 .system
+
+
+ ncli host ls | grep Name | awk '{print $3}'
+
+
+kubectl get secrets vsphere-config-secret -n ntnx-system -o jsonpath='{.data.csi-vsphere\.conf}' | base64 -d                
+
+kubectl get pods -A | egrep "NAME|csi"
 

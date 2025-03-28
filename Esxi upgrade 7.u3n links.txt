@@ -1,0 +1,4 @@
+ZIP : https://urldefense.com/v3/__https://dl.dell.com/FOLDER10931755M/1/VMware-VMvisor-Installer-7.0.0.update03-21930508.x86_64-Dell_Customized-A15.zip__;!!FEyU5bU!EIw1fyg0O1ggxShph2N66op8EXb85Cfr4gLgxcg6dvKKI2-vRSY7f16DA-YKFwsYZ3RD8ZF0T9hydZkv6kWFi9GrA4kG4yPf$
+
+Metadata: https://download.nutanix.com/downloads/hypervisor/6.5.6.5/dell/7.0.0-u3n-21930508-Dell-A15.json?Expires=1724896972&Key-Pair-Id=APKAJTTNCWPEI42QKMSA&Signature=f0GqY6zr7X8DxDhvdr1Qb6tIRllcvj8vEIOpZkwnFBnrTFhPsHBATLrFGwEkg~FBOQUz588-mG41OcTOVz1N-E3VaODpIUYhUXf4tslupzyvLX2MGKtdcJdVddajLev6LBkOgUXU590VWV07wwDZ02xz2uZuhnchAmiIYfQW6Wpu23hHyyy7Ih0BGNaASVH6Rhpe-qcSstxwNMUk7GdxcZbDA3XmiLo8lcOFpuU8m9kAUvIkpViN5fvV1xJurXWFROAAV1Oqy78LYHnzOogKLHybZ~umPI71Pb3z8uA7hJX1Fbo9GwGYlmAJdnGMO1OBw5bpmzRGkJgqVI8jbxOehg__
+

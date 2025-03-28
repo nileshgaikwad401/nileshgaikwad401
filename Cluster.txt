@@ -1,0 +1,53 @@
+Node Management
+-------Shutting Down a Node in a Cluster (vSphere Web Client)------
+1. Log on to vCenter Server by using vSphere Web Client.
+2. If DRS is not enabled, manually migrate all the VMs except the Controller VM another host in the 
+cluster or shut down any VMs other than the Controller VM that you do not want to migrate to 
+another host.
+If DRS is enabled skip to the next step.
+3. Right-click the host and select Maintenance Mode > Enter Maintenance Mode.
+4. In the Confirm Maintenance Mode, click OK.
+5. Log on to the Controller VM with SSH and shut down the Controller VM.
+(command line) nutanix@cvm$ cvm_shutdown -P now
+6. After the Controller VM shuts down, wait for the host to go into maintenance mode.
+7. Right-click the host and select Shut Down.
+
+
+------
+Adding a node to a cluster
+1. Log into Prism Element of the desired
+13
+2. Click on the cog wheel in the upper right corner and select expand cluster
+3. Select the host/s that you want to add and click next
+4. Download the CSR’s for the servers that are going to be added to the cluster
+5. Submit the certificates to the team responsible for KMS
+6. Once the certificates are received navigate to the cog wheel in the upper right corner and click 
+on expand cluster
+7. Select the host/s that you would like to add to the cluster
+8. Upload the certificates
+9. Proceed with adding the nodes to the cluster
+
+-----------allssh date--
+-----------------Starting a Node in a Cluster-----------------
+1. Log on to a running Controller VM in the cluster with SSH.
+2. Start the Controller VM.
+nutanix@cvm$ ~/serviceability/bin/esx-exit-maintenance-mode -s cvm_ip_addr
+If successful, this command produces no output. If if it fails, wait 5 minutes and try again.
+nutanix@cvm$ ~/serviceability/bin/esx-start-cvm -s cvm_ip_addr
+Replace cvm_ip_addr with the IP address of the Controller VM.
+If the Controller VM starts, a message like the following is displayed.
+INFO esx-start-cvm:67 CVM started successfully. Please verify using ping cvm_ip_addr
+After starting, the Controller VM restarts once. Wait three to four minutes before you ping the 
+Controller VM.
+Alternatively, you can take the ESXi host out of maintenance mode and start the Controller VM 
+using the vSphere Web Client.
+3. Verify that all services are up on all Controller VMs.
+nutanix@cvm$ cluster status
+------------
+
+4. Verify storage.
+a. Log on to the ESXi host with SSH.
+b. Rescan for datastores.
+root@esx# esxcli storage core adapter rescan --all
+c. Confirm that cluster VMFS datastores, if any, are available.
+root@esx# esxcfg-scsidevs -m | awk '{print $5}'

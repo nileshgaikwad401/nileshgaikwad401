@@ -1,0 +1,11 @@
+https://www.dell.com/support/kbdoc/en-us/000217354/dell-emc-vxrail-encryption-recovery-key-error-while-communicating-with-daemon-on-4-7-x-7-0-x-and-8-0-x
+
+
+#esxcli system settings encryption get
+
+Mode: NONE
+   Require Executables Only From Installed VIBs: false
+   Require Secure Boot: false
+
+#esxcli system settings encryption set --mode=TPM
+#esxcli system settings encryption recovery list
